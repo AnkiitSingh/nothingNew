@@ -19,14 +19,11 @@ mongoose
   });
 
 //Middlewares
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
 
-
 //My Routes
-
-
 
 //PORT
 const port = process.env.PORT || 8000;

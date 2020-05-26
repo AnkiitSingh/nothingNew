@@ -15,6 +15,6 @@ npm i
     
 3. To format the document write  
     ```bash
-    npm format
+    npm run format
     ```
 
