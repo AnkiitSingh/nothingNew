@@ -9,8 +9,9 @@ npm i
 ## Usage
 1. Create a ('.env' ) file and write ('DATABASE = "your_db_host_address"'),
 2. Then```bash
-npm format
-``` to start the application, 
+    npm format
+    ```
+    to start the application, 
 3. To format the document write  
 ```bash
 npm format
