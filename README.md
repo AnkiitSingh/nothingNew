@@ -7,7 +7,7 @@ npm i
 ```
 
 ## Usage
-1. Create a ('.env' ) file and write ('DATABASE = "your_db_host_address"'),
+1. Create a ('.env' ) file in root directory and write (DATABASE = "your_db_host_address"),
 2. To start the application 
     ```bash
     npm format
