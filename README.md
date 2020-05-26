@@ -10,7 +10,7 @@ npm i
 1. Create a ('.env' ) file in root directory and write (DATABASE = "your_db_host_address"),
 2. To start the application 
     ```bash
-    npm format
+    npm start
     ```    
     
 3. To format the document write  
