@@ -1,13 +1,10 @@
 var express = require("express");
 var router = express.Router();
 const { check, validationResult } = require("express-validator");
-const { createProduct } = require("../controller/productController");
+const { createProduct, getProduct } = require("../controller/productController");
 const Products = require('../models/productSchema');
 
-router.get('/product/admin/get',async (req,res)=>{
-    const products= await Products.find();
-    res.send(products);
-});
+router.get('/product/admin/get', getProduct);
 
 router.post("/product/admin/create", createProduct);
 
