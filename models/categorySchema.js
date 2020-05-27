@@ -11,7 +11,7 @@ var categorySchema = new Schema({
     data: Buffer,
     contentType: String,
   },
-  product: [{
+  products: [{
     type: Schema.Types.ObjectId,
     ref: 'Product'
   }]
