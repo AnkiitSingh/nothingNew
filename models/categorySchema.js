@@ -18,7 +18,7 @@ var categorySchema = new Schema({
 });
 
 // Create model from the schema
-var Category = mongoose.model("category", ProductSchema);
+var Category = mongoose.model("category", categorySchema);
 
 // Export model
 module.exports = Category;
