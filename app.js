@@ -23,7 +23,13 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
 
+//Routes imported from router folder
+const productRoutes = require("./routes/Product");
+const categoryRoutes = require("./routes/Category");
+
 //My Routes
+app.use("/api", productRoutes);
+app.use("/api", categoryRoutes);
 
 //PORT
 const port = process.env.PORT || 8000;
