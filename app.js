@@ -25,8 +25,8 @@ app.use(cookieParser());
 app.use(cors());
 
 //Routes imported from router folder
-const productRoutes = require("./routes/categoryRoutes");
-const categoryRoutes = require("./routes/productRoutes");
+const productRoutes = require("./routes/productRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
 
 //My Routes
 app.use("/api", productRoutes);
