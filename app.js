@@ -7,6 +7,7 @@ const mongoose = require("mongoose"),
   cookieParser = require("cookie-parser"),
   cors = require("cors");
 
+
 //DB Connection
 mongoose
   .connect(process.env.DATABASE, {
@@ -24,8 +25,8 @@ app.use(cookieParser());
 app.use(cors());
 
 //Routes imported from router folder
-const productRoutes = require("./routes/Product");
-const categoryRoutes = require("./routes/Category");
+const productRoutes = require("./routes/categoryRoutes");
+const categoryRoutes = require("./routes/productRoutes");
 
 //My Routes
 app.use("/api", productRoutes);
