@@ -50,4 +50,8 @@ exports.createProduct = (req, res) => {
 exports.getProduct = async (req,res)=>{
   const products= await Products.find();
   res.send(products)
-};
+  };
+
+exports.formProduct = (req, res) => {
+  res.render('product')
+}

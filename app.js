@@ -7,6 +7,8 @@ const mongoose = require("mongoose"),
   cookieParser = require("cookie-parser"),
   cors = require("cors");
 
+//view endine Set
+app.set('view engine', 'ejs');
 
 //DB Connection
 mongoose
