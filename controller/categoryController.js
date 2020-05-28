@@ -105,3 +105,11 @@ exports.updateCategory= (req,res)=>{
       });
     });
 };
+
+exports.deleteCategory= async (req,res)=>{
+  const category=await Category.findByIdAndRemove(req.params.id);
+  if(!category)
+      return res.status(404).send("Given ID was not found");//404 is error not found
+
+  res.send(category);
+};

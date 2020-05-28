@@ -110,3 +110,11 @@ exports.updateProduct= (req,res)=>{
       });
     });
 };
+
+exports.deleteProduct= async (req,res)=>{
+  const product=await Product.findByIdAndRemove(req.params.id);
+  if(!product)
+      return res.status(404).send("Given ID was not found");//404 is error not found
+
+  res.send(product);
+};
