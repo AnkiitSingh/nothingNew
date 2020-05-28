@@ -11,10 +11,10 @@ var categorySchema = new Schema({
     data: Buffer,
     contentType: String,
   },
-  products: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Product'
-  }]
+  products: {
+    type:String,
+    required:true
+  }
 });
 
 // Create model from the schema

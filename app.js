@@ -7,6 +7,9 @@ const mongoose = require("mongoose"),
   cookieParser = require("cookie-parser"),
   cors = require("cors");
 
+//view endine Set
+app.set('view engine', 'ejs');
+
 //DB Connection
 mongoose
   .connect(process.env.DATABASE, {
@@ -18,14 +21,18 @@ mongoose
     console.log("DB CONNECTED");
   });
 
+mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
+
 //Middlewares
+app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
 
 //Routes imported from router folder
-const productRoutes = require("./routes/categoryRoutes");
-const categoryRoutes = require("./routes/productRoutes");
+const productRoutes = require("./routes/productRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
 
 //My Routes
 app.use("/api", productRoutes);

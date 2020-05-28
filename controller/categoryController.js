@@ -4,7 +4,7 @@ const fs = require("fs");
 
 exports.getCategories = async (req,res)=>{
   const categories= await Category.find();
-  res.send(categories);
+  res.render('categories',{categories: categories});
 };
 
 exports.createCategory = (req, res) => {
@@ -18,7 +18,7 @@ exports.createCategory = (req, res) => {
         });
       }
       //destructure the fields
-      console.log('hi');
+
       const { name, photo, products } = fields;
   
       if (!name || !products ) {
@@ -68,6 +68,8 @@ exports.updateCategory= (req,res)=>{
       //destructure the fields
     
       const { name, photo, products } = fields;
+
+      console.log("file="+photo);
   
       if (!name || !products ) {
         return res.status(400).json({
@@ -112,4 +114,16 @@ exports.deleteCategory= async (req,res)=>{
       return res.status(404).send("Given ID was not found");//404 is error not found
 
   res.send(category);
+};
+
+exports.formCategory = (req, res) => {
+  res.render('categoryForm',{link: '/api/category/admin/create',id: null, name: "", photo:"" ,products:""})
+};
+
+exports.formCategoryEdit = async(req, res) => {
+  const category=await Category.findById(req.params.id);
+  if(!category)
+      return res.status(404).send("Given ID was not found");
+  
+  res.render('categoryForm',{link: `/api/category/admin/update/${req.params.id}`,id: category._id, name: category.name, photo:category.photo, products:category.products})
 };

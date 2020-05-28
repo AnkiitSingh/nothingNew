@@ -9,23 +9,19 @@ exports.getProducts = async (req,res)=>{
 
 exports.createProduct = (req, res) => {
 
-    console.log(res)
-
     let form = new formidable.IncomingForm();
     form.keepExtensions = true;
   
     form.parse(req, (err, fields, file) => {
-      console.log(fields);
+      
       if (err) {
         return res.status(400).json({
           error: "problem with image",
         });
       }
-      console.log(fields);
+    
       //destructure the fields
       const { name, description, price, quantity } = fields;
-
-      console.log(`hello : ${fields.name}`);
   
       if (!name || !description || !price || !quantity) {
         return res.status(400).json({
@@ -33,7 +29,7 @@ exports.createProduct = (req, res) => {
         });
       }
   
-      let product = new Products(fields);
+      let product = new Product(fields);
   
       //handle file here
       if (file.photo) {
@@ -64,13 +60,13 @@ exports.updateProduct= (req,res)=>{
     form.keepExtensions = true;
   
     form.parse(req, async (err, fields, file) => {
-      console.log(fields);
+
       if (err) {
         return res.status(400).json({
           error: "problem with image",
         });
       }
-      console.log(fields);
+
       //destructure the fields
       const { name, description, price, quantity } = fields;
   
@@ -118,3 +114,11 @@ exports.deleteProduct= async (req,res)=>{
 
   res.send(product);
 };
+
+exports.formProduct = (req, res) => {
+  res.render('categoryForm')
+}
+
+exports.formProductEdit = (req, res) => {
+  res.render('categoryForm')
+}
