@@ -53,5 +53,5 @@ exports.getProduct = async (req,res)=>{
   };
 
 exports.formProduct = (req, res) => {
-  res.render('product')
+  res.render('productForm')
 }

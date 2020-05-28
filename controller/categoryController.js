@@ -45,3 +45,7 @@ exports.createCategory = (req, res) => {
       });
     });
   };
+
+exports.formCategory = (req, res) => {
+  res.render('categoryForm')
+}
