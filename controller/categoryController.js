@@ -50,7 +50,7 @@ exports.createCategory = (req, res) => {
           });
         }
         console.log('save');
-        res.json(category);
+        res.redirect('/api/category');
       });
     });
   };
@@ -103,7 +103,7 @@ exports.updateCategory= (req,res)=>{
           });
         }
         console.log('save');
-        res.json(category);
+        res.redirect('/api/category');
       });
     });
 };
@@ -121,12 +121,10 @@ exports.formCategoryEdit = async(req, res) => {
 };
 
 exports.deleteCategory= async (req,res)=>{
-  console.log("Fsddasas");
+
   const category=await Category.findByIdAndRemove(req.params.id);
   if(!category)
       return res.status(404).send("Given ID was not found");//404 is error not found
-
-  console.log("fd");
 
   res.redirect('/api/category');
 };

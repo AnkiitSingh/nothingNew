@@ -7,12 +7,12 @@ router.get("/product", getProducts);
 
 router.get("/productForm", formProduct);
 
-router.get("/productEdit", formProductEdit);
+router.get("/productEdit/:id", formProductEdit);
 
 router.post("/product/admin/create", createProduct);
 
-router.put("/product/admin/update/:id", updateProduct);
+router.post("/product/admin/update/:id", updateProduct);
 
-router.delete('/product/admin/delete/:id', deleteProduct);
+router.post('/product/admin/delete/:id', deleteProduct);
 
 module.exports = router;

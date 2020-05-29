@@ -4,7 +4,7 @@ const fs = require("fs");
 
 exports.getProducts = async (req,res)=>{
   const products= await Product.find();
-  res.send(products);
+  res.render('products',{products: products});
 };
 
 exports.createProduct = (req, res) => {
@@ -50,7 +50,7 @@ exports.createProduct = (req, res) => {
             error: "Saving product in DB failed",
           });
         }
-        res.json(product);
+        res.redirect('/api/product');
       });
     });
   };
@@ -102,23 +102,30 @@ exports.updateProduct= (req,res)=>{
           });
         }
         console.log('save');
-        res.json(category);
+        res.redirect('/api/product');
       });
     });
 };
 
+exports.formProduct = (req, res) => {
+  res.render('productForm',{link: '/api/product/admin/create',id: null, name: "", description:"",price:"",photo:"",quantity:"" })
+}
+
+exports.formProductEdit = async(req, res) => {
+  const product=await Product.findById(req.params.id);
+  if(!product)
+      return res.status(404).send("Given ID was not found");
+
+  const {name,description,price,photo,quantity}= product;
+
+  res.render('productForm',{link: `/api/product/admin/update/${req.params.id}`,id: product._id,name,description,price,photo,quantity });
+}
+
 exports.deleteProduct= async (req,res)=>{
+
   const product=await Product.findByIdAndRemove(req.params.id);
   if(!product)
       return res.status(404).send("Given ID was not found");//404 is error not found
 
-  res.send(product);
+  res.redirect('/api/product');
 };
-
-exports.formProduct = (req, res) => {
-  res.render('categoryForm')
-}
-
-exports.formProductEdit = (req, res) => {
-  res.render('categoryForm')
-}
