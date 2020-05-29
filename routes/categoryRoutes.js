@@ -12,6 +12,6 @@ router.post("/category/admin/create", createCategory);
 
 router.post("/category/admin/update/:id", updateCategory);
 
-router.delete('/category/admin/delete/:id', deleteCategory);
+router.post('/category/admin/delete/:id', deleteCategory);
 
 module.exports = router;
