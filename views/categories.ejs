@@ -1,9 +1,14 @@
 <%- include('header.ejs') %>
 
-<div class="ui container">
+<div class="ui container text-center">
+
+    <div style="margin-bottom:4vh">
+        <h1>Categories</h1>
+    </div>
+
     <div class="row">
         <% for(var i=0;i<categories.length;i++) { %>
-            <div class="col-sm-4">
+            <div class="col-sm-4" style="padding-bottom:4vh">
                 <h4><%- categories[i].name %></h4>
                 <a href="/api/categoryEdit-<%- categories[i]._id %>">
                     <button type="button" class="btn-primary">Edit</button>
