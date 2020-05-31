@@ -6,7 +6,7 @@ router.get("/category", getCategories);
 
 router.get("/categoryForm", formCategory);
 
-router.get("/categoryEdit/:id", formCategoryEdit);
+router.get("/categoryEdit-:id", formCategoryEdit);
 
 router.post("/category/admin/create", createCategory);
 

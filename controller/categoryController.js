@@ -11,7 +11,7 @@ exports.createCategory = (req, res) => {
     let form = new formidable.IncomingForm();
     form.keepExtensions = true;
   
-    form.parse(req, (err, fields, file) => {
+    form.parse(req, async(err, fields, file) => {
       if (err) {
         return res.status(400).json({
           error: "problem with image",
@@ -20,6 +20,8 @@ exports.createCategory = (req, res) => {
       //destructure the fields
 
       const { name, photo, products } = fields;
+
+      console.log("file="+photo);
   
       if (!name || !products ) {
         return res.status(400).json({
@@ -39,8 +41,6 @@ exports.createCategory = (req, res) => {
         category.photo.data = fs.readFileSync(file.photo.path);
         category.photo.contentType = file.photo.type;
       }
-
-      console.log('bye');
   
       //save to the DB
       category.save((err, category) => {
@@ -82,6 +82,7 @@ exports.updateCategory= (req,res)=>{
       if(!category)
         return res.status(404).send("Given ID was not found");//404 is error not found
   
+      console.log(file);
       //handle file here
       if (file.photo) {
         if (file.photo.size > 3000000) {
