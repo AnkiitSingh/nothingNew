@@ -11,6 +11,15 @@
         <input type="text" id="name" name="name" value="<%- name %>" /><br/><br/>
         <label for="description">Description</label>
         <input type="text" id="description" name="description" value="<%- description %>"/><br/><br/>
+        <label for="category">Choose a category:</label>
+        <select name="category" id="cars">
+            <option value="<%- first_val %>"><%- first_val.name %></option>
+            <% for(var i=0;i<categories.length;i++) { %>
+                <% if(categories[i].name!=first_val.name) { %>
+                    <option value="<%- categories[i]._id %>"><%- categories[i].name %></option>
+                <% } %>
+            <% } %>
+        </select>
         <label for="price">Price</label>
         <input type="number" id="price" name="price" value="<%- price %>" /><br/><br/>
         <label for="photo">Upload an Image</label>
