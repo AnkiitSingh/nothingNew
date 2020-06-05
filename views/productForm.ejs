@@ -12,7 +12,7 @@
         <label for="description">Description</label>
         <input type="text" id="description" name="description" value="<%- description %>"/><br/><br/>
         <label for="category">Choose a category:</label>
-        <select name="category" id="cars">
+        <select name="category" id="category">
             <option value="<%- first_val._id %>"><%- first_val.name %></option>
             <% for(var i=0;i<categories.length;i++) { %>
                 <% if(categories[i].name!=first_val.name) { %>

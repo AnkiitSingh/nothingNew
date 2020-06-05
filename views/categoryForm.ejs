@@ -1,18 +1,25 @@
 <%- include('header.ejs') %>
 
 <div class="ui container">
-    
-    <div class="text-center">
-        <h2>Category Form</h2>
-    </div>
+  <div class="text-center">
+    <h2>Category Form</h2>
+  </div>
 
-    <form class="ui form" action="<%- link %>" method="POST">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" value="<%- name %>"/><br/><br/>
-        <label for="photo">Upload an Image</label>
-        <input type="file" id="photo" name="photo" value="<%- photo %>" accept="image/*"/><br/><br/>
-        <label for="product">Product ID</label>
-        <input type="text" id="product" name="products" value="<%- products %>" /><br/><br/>
-        <input class="ui button primary" type="submit" placeholder="click to submit">
-    </form>
+  <form class="ui form" action="<%- link %>" method="POST">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" value="<%- name %>" /><br /><br />
+    <label for="photo">Upload an Image</label>
+    <input
+      type="file"
+      id="photo"
+      name="photo"
+      value="<%- photo %>"
+      accept="image/*"
+    /><br /><br />
+    <input
+      class="ui button primary"
+      type="submit"
+      placeholder="click to submit"
+    />
+  </form>
 </div>

@@ -19,11 +19,11 @@ exports.createCategory = (req, res) => {
     }
     //destructure the fields
 
-    const { name, photo, products } = fields;
+    const { name, photo } = fields;
 
     console.log("file=" + photo);
 
-    if (!name || !products) {
+    if (!name) {
       return res.status(400).json({
         error: "Please include all fields",
       });
@@ -67,11 +67,11 @@ exports.updateCategory = (req, res) => {
     }
     //destructure the fields
 
-    const { name, photo, products } = fields;
+    const { name, photo } = fields;
 
     console.log("file=" + photo);
 
-    if (!name || !products) {
+    if (!name) {
       return res.status(400).json({
         error: "Please include all fields",
       });
@@ -116,7 +116,6 @@ exports.formCategory = (req, res) => {
     id: null,
     name: "",
     photo: "",
-    products: "",
   });
 };
 
@@ -129,7 +128,6 @@ exports.formCategoryEdit = async (req, res) => {
     id: category._id,
     name: category.name,
     photo: category.photo,
-    products: category.products,
   });
 };
 
