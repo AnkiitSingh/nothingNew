@@ -1,8 +1,31 @@
-<form action="/api/product/admin/create" method="POST">
-    <input type="text" id="name" name="name" placeholder="name">
-    <input type="text" id="description" name="description" placeholder="description">
-    <input type="number" id="price" name="price" placeholder="price">
-    <input type="file" id="photo" name="photo" accept="image/*">
-    <input type="number" id="quantity" name="quantity" placeholder="quantity">
-    <input type="submit" placeholder="click to submit">
-</form>
+<%- include('header.ejs') %>
+
+<div class="ui container form">
+
+    <div class="text-center">
+        <h2>Product Form</h2>
+    </div>
+
+    <form class="ui form" action="<%- link %>" method="POST">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" value="<%- name %>" /><br/><br/>
+        <label for="description">Description</label>
+        <input type="text" id="description" name="description" value="<%- description %>"/><br/><br/>
+        <label for="category">Choose a category:</label>
+        <select name="category" id="category">
+            <option value="<%- first_val._id %>"><%- first_val.name %></option>
+            <% for(var i=0;i<categories.length;i++) { %>
+                <% if(categories[i].name!=first_val.name) { %>
+                    <option value="<%- categories[i]._id %>"><%- categories[i].name %></option>
+                <% } %>
+            <% } %>
+        </select>
+        <label for="price">Price</label>
+        <input type="number" id="price" name="price" value="<%- price %>" /><br/><br/>
+        <label for="photo">Upload an Image</label>
+        <input type="file" id="photo" name="photo"value="<%- photo %>" accept="image/*" /><br/><br/>
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" name="quantity" value="<%- quantity %>" /><br/><br/>
+        <input class="ui button primary" type="submit" placeholder="click to submit"/>
+    </form>
+</div>

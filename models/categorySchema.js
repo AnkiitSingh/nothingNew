@@ -5,16 +5,12 @@ var Schema = mongoose.Schema;
 var categorySchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   photo: {
     data: Buffer,
     contentType: String,
   },
-  products: {
-    type:String,
-    required:true
-  }
 });
 
 // Create model from the schema

@@ -5,10 +5,12 @@ const mongoose = require("mongoose"),
   app = express(),
   bodyParser = require("body-parser"),
   cookieParser = require("cookie-parser"),
-  cors = require("cors");
+  cors = require("cors"),
+  Category = require("./models/categorySchema"),
+  Product = require("./models/productSchema");
 
 //view endine Set
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 
 //DB Connection
 mongoose
@@ -21,7 +23,11 @@ mongoose
     console.log("DB CONNECTED");
   });
 
+mongoose.set("useCreateIndex", true);
+mongoose.set("useFindAndModify", false);
+
 //Middlewares
+app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
@@ -33,6 +39,14 @@ const categoryRoutes = require("./routes/categoryRoutes");
 //My Routes
 app.use("/api", productRoutes);
 app.use("/api", categoryRoutes);
+
+//Home Page
+
+app.get("/", async (req, res) => {
+  const categories = await Category.find();
+  const products = await Product.find();
+  res.render("index.ejs", { categories, products });
+});
 
 //PORT
 const port = process.env.PORT || 8000;

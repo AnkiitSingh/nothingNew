@@ -1,8 +1,17 @@
 var express = require("express");
 var router = express.Router();
-const {createCategory, formCategory} = require("../controller/categoryController");
-const {Category}= require("../models/categorySchema");
+const {getCategories, createCategory, updateCategory, deleteCategory, formCategory, formCategoryEdit} = require("../controller/categoryController");
+
+router.get("/category", getCategories);
+
+router.get("/categoryForm", formCategory);
+
+router.get("/categoryEdit-:id", formCategoryEdit);
 
 router.post("/category/admin/create", createCategory);
-router.get("/category/admin/create", formCategory);
+
+router.post("/category/admin/update/:id", updateCategory);
+
+router.post('/category/admin/delete/:id', deleteCategory);
+
 module.exports = router;
