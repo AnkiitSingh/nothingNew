@@ -21,8 +21,6 @@ exports.createCategory = (req, res) => {
 
     const { name, photo } = fields;
 
-    console.log("file=" + photo);
-
     if (!name) {
       return res.status(400).json({
         error: "Please include all fields",
@@ -33,7 +31,7 @@ exports.createCategory = (req, res) => {
 
     //handle file here
     if (file.photo) {
-      if (file.photo.size > 3000000) {
+      if (file.photo.size > 300000) {
         return res.status(400).json({
           error: "File size too big!",
         });
@@ -49,8 +47,7 @@ exports.createCategory = (req, res) => {
           error: "Saving product in DB failed",
         });
       }
-      console.log("save");
-      res.redirect("/api/category");
+      res.send("saved");
     });
   });
 };
