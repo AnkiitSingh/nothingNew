@@ -14,7 +14,7 @@ app.set("view engine", "ejs");
 
 //DB Connection
 mongoose
-  .connect("mongodb+srv://Ankit:abdullahchak@cluster0-axm7b.mongodb.net/grocer?retryWrites=true&w=majority", {
+  .connect(process.env.DATABASE, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
