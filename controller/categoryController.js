@@ -3,7 +3,6 @@ const formidable = require("formidable");
 const fs = require("fs");
 
 exports.getCategories = async (req, res) => {
-  console.log("we hit the route");
   const categories = await Category.find();
   res.send(categories);
 };
