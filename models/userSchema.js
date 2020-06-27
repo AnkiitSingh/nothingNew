@@ -1,5 +1,4 @@
 var mongoose = require("mongoose");
-const user = require("../../LCO/models/user");
 var Schema = mongoose.Schema;
 
 // Schema Def //
