@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+const user = require("../../LCO/models/user");
 var Schema = mongoose.Schema;
 
 // Schema Def //
@@ -24,6 +25,11 @@ var userSchema = new Schema({
     }
   });
 
+userSchema.methods = {
+    autheticate: function(phoneNo) {
+      return phoneNo !== user.phoneNo;
+  },
+}
 //Create model fromthe schema
 var User= mongoose.model("user", userSchema);
 
