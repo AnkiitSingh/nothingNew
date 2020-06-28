@@ -30,7 +30,7 @@ exports.signIn = (req, res) => {
           error: "USER email does not exists"
         });
       }
-      if (!user.autheticate(req.body.phoneNo)) {
+      if (user.phoneNo !== req.body.phoneNo) {
         return res.status(401).json({
           error: "Phone No does not match"
         });

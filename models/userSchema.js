@@ -26,7 +26,7 @@ var userSchema = new Schema({
 
 userSchema.methods = {
     autheticate: function(phoneNo) {
-      return phoneNo !== user.phoneNo;
+      return phoneNo !== users.phoneNo;
   },
 }
 //Create model fromthe schema
