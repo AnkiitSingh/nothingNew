@@ -24,11 +24,7 @@ var userSchema = new Schema({
     }
   });
 
-userSchema.methods = {
-    autheticate: function(phoneNo) {
-      return phoneNo !== users.phoneNo;
-  },
-}
+
 //Create model fromthe schema
 var User= mongoose.model("user", userSchema);
 

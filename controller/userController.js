@@ -22,17 +22,15 @@ exports.createUser = (req, res) => {
 
 exports.signIn = (req, res) => {
     const { email, phoneNo } = req.body;
-  
     User.findOne({ email }, (err, user) => {
-      if (err || !user) {
-        console.log(user);
+      if (err || !user) {;
         return res.status(400).json({
           error: "USER email does not exists"
         });
       }
-      if (user.phoneNo !== req.body.phoneNo) {
+      if (user.phoneNo.toString() !== req.body.phoneNo) {
         return res.status(401).json({
-          error: "Phone No does not match"
+          error: "Phone No does not match",
         });
       }
   
