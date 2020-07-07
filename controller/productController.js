@@ -150,3 +150,11 @@ exports.deleteProduct = async (req, res) => {
 
   res.redirect("/api/product");
 };
+
+exports.filterProducts = async(req, res) => {
+  const products = await Product.find({ category: req.params.categoryName });
+  if(products[0]==null){
+    return res.send("No product found");
+  }
+  res.send(products);
+}

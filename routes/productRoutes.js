@@ -1,11 +1,13 @@
 var express = require("express");
 var router = express.Router();
 const { check, validationResult } = require("express-validator");
-const { createProduct, getProducts, updateProduct, deleteProduct, formProduct, formProductEdit} = require("../controller/productController");
+const { createProduct, getProducts, updateProduct, deleteProduct, formProduct, formProductEdit, filterProducts} = require("../controller/productController");
 
 router.get("/product", getProducts);
 
 router.get("/productForm", formProduct);
+
+router.get("/product/:categoryName", filterProducts);
 
 router.get("/productEdit-:id", formProductEdit);
 
