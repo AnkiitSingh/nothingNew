@@ -66,3 +66,24 @@ exports.isAuthenticated = (req, res, next) => {
   }
   next();
 };
+
+
+exports.pushCart = async(req, res) => {
+  cpnsole.log("weare here")
+  const user = await User.find({_id: req.params.userid})
+  var cartProduct = await req.params.productid;
+  if(user[0] == null){
+    return res.send("No user Found")
+  }
+  if(cartProduct){
+    user[0].cart.push(cartProduct) ;
+  }
+  await user[0].save();
+  return res.send(user);
+}
+
+exports.userCart = async(req, res) =>{
+  const user = await User.find({_id: req.params.userid})
+  const cart = user[0].cart
+  res.send(cart);
+}
