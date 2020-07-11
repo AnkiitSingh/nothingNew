@@ -69,7 +69,6 @@ exports.isAuthenticated = (req, res, next) => {
 
 
 exports.pushCart = async(req, res) => {
-  cpnsole.log("weare here")
   const user = await User.find({_id: req.params.userid})
   var cartProduct = await req.params.productid;
   if(user[0] == null){
