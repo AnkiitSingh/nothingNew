@@ -134,3 +134,12 @@ exports.deleteCategory = async (req, res) => {
 
   res.redirect("/api/category");
 };
+
+exports.categoryProducts = async(req, res) => {
+  const category = await Category.find({ _id: req.params.id })
+  if(category[0].photo.data){
+    res.set("Content-Type", category[0].photo.contentType);
+    return res.send(category[0].photo.data);
+  }
+  res.send("not found")
+}
