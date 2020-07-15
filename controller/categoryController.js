@@ -19,9 +19,9 @@ exports.createCategory = (req, res) => {
     }
     //destructure the fields
 
-    const { name, photo } = fields;
+    const { name, photo, description} = fields;
 
-    if (!name) {
+    if (!name && !description) {
       return res.status(400).json({
         error: "Please include all fields",
       });

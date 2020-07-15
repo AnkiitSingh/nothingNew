@@ -86,3 +86,28 @@ exports.userCart = async(req, res) =>{
   const cart = user[0].cart
   res.send(cart);
 }
+
+exports.getUser = async(req, res) => {
+  const user = await User.find({_id: req.params.userId}, async function(err, person){
+    if(err){
+      res.send("No user Found")
+    }
+    const info = {"email":person[0].email, "phoneNo":person[0].phoneNo, "address":person[0].address};
+    await res.send(info)
+  })
+}
+exports.removeFromCart = async(req, res) => {
+  const user = await User.find({_id: req.params.userId}, async function(err, person){
+    if(err){
+      res.send("No user Found")
+    }
+    if(req.params.no >= person[0].cart.lenght){
+      res.send(("Invalid Delete request"));
+    }
+    else{
+      person[0].cart.splice(req.params.no, 1);
+    } 
+    await person[0].save();
+    res.send(person)
+  })
+}

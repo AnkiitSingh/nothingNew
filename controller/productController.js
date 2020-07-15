@@ -168,9 +168,9 @@ exports.cartProduct = async(req, res) => {
 
 exports.photoProducts = async(req, res, next) => {
   const products = await Product.find({ _id: req.params.id });
-  if(product[0].photo.data){
-    res.set("Content-Type", product[0].photo.contentType);
-    return res.send(product[0].photo.data);
+  if(products[0].photo.data){
+    res.set("Content-Type", products[0].photo.contentType);
+    return res.send(products[0].photo.data);
   }
   res.send("not found")
 }

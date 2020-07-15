@@ -7,6 +7,10 @@ var categorySchema = new Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    required: true,
+  },
   photo: {
     data: Buffer,
     contentType: String,
