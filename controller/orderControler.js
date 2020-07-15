@@ -36,6 +36,7 @@ exports.getUserOrder = async(req, res) => {
                 }
                 arre.push(value);
                 if( i === person[0].orders.length){
+                    arre.pop()
                     await res.send(arre)
                 } 
             }) 
@@ -60,6 +61,7 @@ exports.cancleOrder = async(req, res) =>{
 }
 
 exports.orderDetails = async(req, res) =>{
+    var arr= []
     Order.find({_id: req.params.orderId}, async function(err, value){
         if(err){
             res.send("Order not found")
@@ -67,7 +69,6 @@ exports.orderDetails = async(req, res) =>{
         if(value[0]==null){
             res.send("No Orers Found")
         }
-        var arr= []
         for(let i=0; i<=value[0].products.length; i++){
             Products.find({_id : value[0].products[i]},async function(err, data){
                 if(err){
@@ -80,9 +81,10 @@ exports.orderDetails = async(req, res) =>{
 
                 }
                 var sent = data[0];
-                arr.push(sent)
-                if(i===value[0].products.length){
-                    await res.send(arr)
+                arr.push(sent);
+                if(i ===value[0].products.length){
+                    arr.pop();
+                    res.send(arr)
                 }
             })
         };
