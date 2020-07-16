@@ -83,7 +83,7 @@ exports.orderDetails = async(req, res) =>{
                 }
                 var sent = data[0];
                 arr.push(sent);
-                if(i ===value[0].products.length){
+                if(i == value[0].products.length){
                     await arr.pop();
                     await res.send(arr)
                 }
