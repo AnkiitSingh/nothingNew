@@ -17,6 +17,7 @@ exports.placeOrder = async(req, res) => {
                 });
             }
             person[0].orders.push(order.id);
+            person[0].cart = [];
             await person[0].save();
             res.send(order);
         })

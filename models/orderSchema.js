@@ -17,9 +17,12 @@ const OrderSchema = new mongoose.Schema(
       user: {
         type: String,
         required:true
+      },
+      date: { 
+        type: Date, 
+        default: Date.now 
       }
     },
-    { timestamps: true }
   );
   
 const Order = mongoose.model("Order", OrderSchema);
