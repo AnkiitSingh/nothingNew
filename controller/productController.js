@@ -22,7 +22,7 @@ exports.createProduct = (req, res) => {
     //destructure the fields
     const { name, description, category, price, quantity } = fields;
 
-    if (!name || !description || !category || !price || !quantity) {
+    if (!name || !description  || !price || !quantity ||!category ) {
       return res.status(400).json({
         error: "Please include all fields",
       });
