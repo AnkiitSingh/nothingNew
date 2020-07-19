@@ -4,6 +4,14 @@ const fs = require("fs");
 
 exports.getCategories = async (req, res) => {
   const categories = await Category.find();
+  for (let i = 0; i < categories.length; i++) {
+    try {
+      categories[i].photo = undefined
+    }
+    catch{
+
+    }
+  }
   res.send(categories);
 };
 
@@ -19,7 +27,7 @@ exports.createCategory = (req, res) => {
     }
     //destructure the fields
 
-    const { name, photo} = fields;
+    const { name, photo } = fields;
 
     if (!name) {
       return res.status(400).json({
@@ -135,9 +143,9 @@ exports.deleteCategory = async (req, res) => {
   res.redirect("/api/category");
 };
 
-exports.categoryProducts = async(req, res) => {
+exports.categoryProducts = async (req, res) => {
   const category = await Category.find({ _id: req.params.id })
-  if(category[0].photo.data){
+  if (category[0].photo.data) {
     res.set("Content-Type", category[0].photo.contentType);
     return res.send(category[0].photo.data);
   }
