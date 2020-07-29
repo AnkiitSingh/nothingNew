@@ -22,7 +22,7 @@ exports.createProduct = (req, res) => {
     //destructure the fields
     const { name, description, category, price, quantity } = fields;
 
-    if (!name || !description  || !price || !quantity ||!category ) {
+    if (!name || !description || !price || !quantity || !category) {
       return res.status(400).json({
         error: "Please include all fields",
       });
@@ -151,24 +151,38 @@ exports.deleteProduct = async (req, res) => {
   res.redirect("/api/product");
 };
 
-exports.filterProducts = async(req, res) => {
+exports.filterProducts = async (req, res) => {
   const products = await Product.find({ category: req.params.categoryName });
-  if(products[0]==null){
-    return res.send("No product found");
-  }
-  res.send(products);
-}
-exports.cartProduct = async(req, res) => {
-  const products = await Product.find({ _id: req.params.id });
-  if(products[0]==null){
+  if (products[0] == null) {
     return res.send("No product found");
   }
   res.send(products);
 }
 
-exports.photoProducts = async(req, res, next) => {
+exports.cartProduct = async (req, res) => {
   const products = await Product.find({ _id: req.params.id });
-  if(products[0].photo.data){
+  if (products[0] == null) {
+    return res.send("No product found");
+  }
+  res.send(products);
+}
+
+exports.getById = async (req, res) => {
+  Product.find({ _id: req.params.id }, async function (err, value) {
+    if (err) {
+      res.send("Order not found")
+    }
+    if (value[0] == null) {
+      res.send("No Orders Found")
+    }
+    value[0].photo = undefined
+    res.send(value[0])
+  })
+}
+
+exports.photoProducts = async (req, res, next) => {
+  const products = await Product.find({ _id: req.params.id });
+  if (products[0].photo.data) {
     res.set("Content-Type", products[0].photo.contentType);
     return res.send(products[0].photo.data);
   }
