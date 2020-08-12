@@ -6,7 +6,7 @@
         <h2>Product Form</h2>
     </div>
 
-    <form class="ui form" action="<%- link %>" method="POST">
+    <form class="ui form" action="<%- link %>" method="post" enctype="multipart/form-data">
         <label for="name">Name</label>
         <input type="text" id="name" name="name" value="<%- name %>" /><br /><br />
         <label for="description">Description</label>
@@ -23,9 +23,16 @@
         <label for="price">Price</label>
         <input type="number" id="price" name="price" value="<%- price %>" /><br /><br />
         <label for="photo">Upload an Image</label>
-        <input type="file" id="photo" name="photo" value="<%- photo %>" accept="image/*" /><br /><br />
+        <input type="file" id="photo" name="photo" accept="image/*" name="photo" multiple="multiple" /><br /><br />
         <label for="quantity">Quantity</label>
         <input type="text" id="quantity" name="quantity" value="<%- quantity %>" /><br /><br />
+        <label>Status</label>
+        <select type="text" id="status" name="status" placeholder="status">
+            <option value="InStock">In Stock</option>
+            <option value="StockOut">Stock out</option>
+            <option value="Offer">Offer</option>
+        </select>
+        <br />
         <input class="ui button primary" type="submit" placeholder="click to submit" />
     </form>
 </div>

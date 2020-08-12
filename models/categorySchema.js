@@ -11,6 +11,11 @@ var categorySchema = new Schema({
     data: Buffer,
     contentType: String,
   },
+  priority: {
+    type: String,
+    default: "Low",
+    enum: ["High", "Low"]
+  },
 });
 
 // Create model from the schema

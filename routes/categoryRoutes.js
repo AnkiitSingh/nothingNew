@@ -1,8 +1,10 @@
 var express = require("express");
 var router = express.Router();
-const {getCategories, categoryProducts, createCategory, updateCategory, deleteCategory, formCategory, formCategoryEdit} = require("../controller/categoryController");
+const { getCategories, categoryProducts, createCategory, getLowCategories, updateCategory, deleteCategory, formCategory, formCategoryEdit } = require("../controller/categoryController");
 
-router.get("/category", getCategories);
+router.get("/category/high", getCategories);
+
+router.get("/category/low", getLowCategories);
 
 router.get("/categoryForm", formCategory);
 

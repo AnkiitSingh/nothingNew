@@ -8,6 +8,20 @@ exports.getProducts = async (req, res) => {
   res.render("products", { products: products });
 };
 
+exports.OfferProducts = async (req, res) => {
+  const value = await Product.find({ status: "Offer" }, async (err, data) => {
+    if (err) {
+      return res.json({
+        message: "No product found"
+      })
+    }
+    for (let i = 0; i < data.length; i++) {
+      data[i].photo = undefined;
+    }
+    return await res.send(data)
+  })
+}
+
 exports.createProduct = (req, res) => {
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;

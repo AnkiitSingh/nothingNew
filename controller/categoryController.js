@@ -3,16 +3,31 @@ const formidable = require("formidable");
 const fs = require("fs");
 
 exports.getCategories = async (req, res) => {
-  const categories = await Category.find();
-  for (let i = 0; i < categories.length; i++) {
-    try {
-      categories[i].photo = undefined
+  const value = await Category.find({ priority: "High" }, async (err, data) => {
+    if (err) {
+      return res.json({
+        message: "No category found"
+      })
     }
-    catch{
+    for (let i = 0; i < data.length; i++) {
+      data[i].photo = undefined;
+    }
+    return await res.send(data)
+  })
+};
 
+exports.getLowCategories = async (req, res) => {
+  const value = await Category.find({ priority: "Low" }, async (err, data) => {
+    if (err) {
+      return res.json({
+        message: "No category found"
+      })
     }
-  }
-  res.send(categories);
+    for (let i = 0; i < data.length; i++) {
+      data[i].photo = undefined;
+    }
+    return await res.send(data)
+  })
 };
 
 exports.createCategory = (req, res) => {
