@@ -2,6 +2,16 @@ const Order = require("../models/orderSchema");
 const User = require("../models/userSchema");
 const Products = require("../models/productSchema")
 
+exports.getOrders = async (req, res) => {
+    const orders = await Order.find({status: 'Recieved'});
+    res.render("orders", { orders: orders });
+  };
+
+exports.searchOrder = async (req, res) => {
+    const order = await Order.find({user: req.body.id, status: 'Recieved'});
+    res.render("orders", { orders: order });
+};
+
 exports.placeOrder = async (req, res) => {
     const user = await User.find({ _id: req.params.userId }, async function (err, person) {
         if (err) {

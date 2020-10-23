@@ -3,7 +3,12 @@ var jwt = require("jsonwebtoken");
 var expressJwt = require("express-jwt");
 
 
+exports.formUser = async (req, res) => {
+  res.render("userForm");
+};
+
 exports.createUser = (req, res) => {
+  console.log(req.body);
   const user = new User(req.body);
   user.save((err, user) => {
     if (err) {
@@ -11,11 +16,7 @@ exports.createUser = (req, res) => {
         error: "include all fields or email already in use"
       });
     }
-    res.json({
-      email: user.email,
-      id: user._id,
-      phoneNo: user.phoneNo
-    });
+    res.redirect('/api/userForm');
   })
 }
 

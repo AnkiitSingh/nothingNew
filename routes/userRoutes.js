@@ -1,8 +1,8 @@
 var express = require ("express"),
 router = express.Router();
-const {createUser, getUser,signIn, signOut, pushCart, userCart, removeFromCart} = require("../controller/userController");
+const {formUser,createUser, getUser,signIn, signOut, pushCart, userCart, removeFromCart} = require("../controller/userController");
 
-
+router.get("/userForm", formUser);
 router.post("/newUser", createUser);
 router.post("/signIn", signIn);
 router.get("/signout", signOut);

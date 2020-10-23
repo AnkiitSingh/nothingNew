@@ -29,8 +29,10 @@ mongoose.set("useFindAndModify", false);
 //Middlewares
 app.use(express.static("public"));
 app.use(bodyParser.json());
+app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
+app.use(bodyParser.urlencoded({extended: false}));
 
 //Routes imported from router folder
 const productRoutes = require("./routes/productRoutes");
