@@ -7,8 +7,13 @@ exports.getOrders = async (req, res) => {
     res.render("orders", { orders: orders });
   };
 
+  exports.getOrder = async (req, res) => {
+    const order = await Order.find({_id: req.params.id});
+    res.send(order);
+  };
+
 exports.searchOrder = async (req, res) => {
-    const order = await Order.find({user: req.body.id, status: 'Recieved'});
+    const order = await Order.find({transaction_id: req.body.id, status: 'Recieved'});
     res.render("orders", { orders: order });
 };
 

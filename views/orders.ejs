@@ -19,18 +19,23 @@
         <thead>
             <tr>
                 <th scope="col">S.No</th>
-                <th scope="col">User</th>
+                <th scope="col">Transaction Id</th>
                 <th scope="col">Status</th>
             </tr>
         </thead>
 
         <tbody>
             <% for(var i=0;i<orders.length;i++) { %>
-                <tr>
-                    <th scope="row"><%- i+1 %></th>
-                    <td><%- orders[i].user %></td>
-                    <td><%- orders[i].status %></td>
-                </tr>
+                
+                    <tr>
+                            <th scope="row"><%- i+1 %></th>
+                            <td>
+                                <a href="/api/get/orders/<%- orders[i]._id %>" >
+                                    <%- orders[i].transaction_id %>
+                                </a>
+                            </td>
+                            <td><%- orders[i].status %></td>
+                    </tr>
             <% } %>
         </tbody>
       </table>
