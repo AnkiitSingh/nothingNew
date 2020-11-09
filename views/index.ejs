@@ -6,30 +6,21 @@
         <h1>GROCERY STORE WEB-APP</h1>
     </div>
 
-    <table class="table table-hover table-dark">
-        <thead>
-            <tr>
-                <th scope="col">S.No</th>
-                <th scope="col">Categories</th>
-                <th scope="col">Products</th>
-            </tr>
-        </thead>
+    <div class="row text-center">
+        <% for(var i=0;i<categories.length;i++) { %>
+            <div class="col-sm-4">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="/api/category/photo/<%- categories[i]._id %>" style="height:25vh; width:20vw" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title"><%- categories[i].name %></h5>
+                        <p class="card-text">Priority: <%- categories[i].priority %> </p>
+                    </div>
+                    <div class="card-body">
+                        <a href="api/categoryEdit-<%- categories[i]._id %>" class="card-link">Edit</a>
+                    </div>
+                </div>
+            </div>
+        <% } %>
 
-        <tbody>
-            <% for(var i=0;i<categories.length;i++) { %>
-                <tr>
-                    <th scope="row"><%- i+1 %></th>
-                    <td><%- categories[i].name %></td>
-                    <td>
-                        <% for(var j=0;j<products.length;j++) { %>
-                            <% if(categories[i]._id==products[j].category) { %>
-                                <%- products[j].name %><br/>
-                            <% } %>
-                        <% } %>
-                    </td>
-                </tr>
-            <% } %>
-        </tbody>
-      </table>
 
 </div>
