@@ -3,13 +3,13 @@ var router = express.Router();
 const { check, validationResult } = require("express-validator");
 const { createProduct, photoProducts, cartProduct, getById, OfferProducts, getProducts, updateProduct, deleteProduct, formProduct, formProductEdit, filterProducts } = require("../controller/productController");
 
-router.get("/product", getProducts);
+router.get("/products", getProducts);
 
 router.get("/productOffer", OfferProducts);
 
 router.get("/productForm", formProduct);
 
-router.get("/product/:categoryName", filterProducts);
+router.get("/product-:categoryId", filterProducts);
 
 router.get("/getProduct/:id", getById);
 //rote to get product photo
