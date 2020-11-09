@@ -12,9 +12,7 @@
         <% for(var i=0;i<products.length;i++) { %>
             <div class="col-sm-4">
                 <div class="card" style="width: 18rem;">
-                    <a href="/api/product-<%- products[i]._id %>">
-                        <img class="card-img-top" src="/api/product/photo/<%- products[i]._id %>" style="height:25vh; width:20vw" alt="Card image cap">
-                    </a>
+                    <img class="card-img-top" src="/api/product/photo/<%- products[i]._id %>" style="height:25vh; width:20vw" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title"><%- products[i].name %></h5>
                         <p class="card-text"><%- products[i].description %></p>
