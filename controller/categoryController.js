@@ -70,7 +70,7 @@ exports.createCategory = (req, res) => {
           error: "Saving product in DB failed",
         });
       }
-      res.send("saved");
+      res.redirect("/");
     });
   });
 };
@@ -115,7 +115,6 @@ exports.updateCategory = (req, res) => {
       category.photo.contentType = file.photo.type;
     }
 
-    console.log("bye");
 
     //save to the DB
     category.save((err, category) => {
@@ -125,7 +124,7 @@ exports.updateCategory = (req, res) => {
         });
       }
       console.log("save");
-      res.redirect("/api/category");
+      res.redirect("/");
     });
   });
 };
@@ -136,6 +135,7 @@ exports.formCategory = (req, res) => {
     id: null,
     name: "",
     photo: "",
+    btn: "Create"
   });
 };
 
@@ -148,6 +148,7 @@ exports.formCategoryEdit = async (req, res) => {
     id: category._id,
     name: category.name,
     photo: category.photo,
+    btn: "Update"
   });
 };
 
@@ -155,7 +156,7 @@ exports.deleteCategory = async (req, res) => {
   const category = await Category.findByIdAndRemove(req.params.id);
   if (!category) return res.status(404).send("Given ID was not found"); //404 is error not found
 
-  res.redirect("/api/category");
+  res.redirect("/");
 };
 
 exports.categoryProducts = async (req, res) => {
