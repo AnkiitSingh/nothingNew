@@ -9,6 +9,6 @@ router.get("/user/orderDetails/:orderId", orderDetails);
 router.get("/user/:userId/amount", orderAmount)
 router.post("/order/search", searchOrder);
 router.post("/order/create/:userId", placeOrder);
-router.put("/order/cancle/:userId/:orderId", cancleOrder);
+router.put("/order/cancel/:userId/:orderId", cancleOrder);
 
 module.exports = router;
