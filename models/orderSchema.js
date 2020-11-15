@@ -14,7 +14,11 @@ const OrderSchema = new mongoose.Schema(
     },
     status: {
       type: String,
+<<<<<<< HEAD
       default: "Processing",
+=======
+      default: "Recieved",
+>>>>>>> 25f51b08da2bdfedcb172c470085641ff3852adc
       enum: ["Cancelled", "Delivered", "Shipped", "Processing", "Recieved", "Returning", "Refunded"]
     },
     user: {
