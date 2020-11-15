@@ -1,19 +1,26 @@
 const Order = require("../models/orderSchema");
 const User = require("../models/userSchema");
-const Products = require("../models/productSchema")
+const Product = require("../models/productSchema")
 
 exports.getOrders = async (req, res) => {
-    const orders = await Order.find({status: 'Recieved'});
+    const orders = await Order.find({ status: 'Recieved' });
     res.render("orders", { orders: orders });
-  };
+};
 
   exports.getOrder = async (req, res) => {
     const order = await Order.find({_id: req.params.id});
-    res.send(order);
+    var list=[];
+    for(var i=0;i<order[0].products.length;i++){
+        const product= await Product.findById(order[0].products[i])
+        list.push(product);
+    }
+    console.log(order);
+    const en= Order.schema.path('status').enumValues;
+    res.render("orders_detail", { order: order, status: order[0].status, list: list,en: en});
   };
 
 exports.searchOrder = async (req, res) => {
-    const order = await Order.find({transaction_id: req.body.id, status: 'Recieved'});
+    const order = await Order.find({ transaction_id: req.body.id, status: 'Recieved' });
     res.render("orders", { orders: order });
 };
 
@@ -73,5 +80,35 @@ exports.orderDetails = async (req, res) => {
             res.send("No Orders Found")
         }
         res.send(value[0].products)
+    })
+}
+
+exports.orderAmount = async (req, res) => {
+    User.find({ _id: req.params.userId }, async function (err, data) {
+        if (err || !data || data === [] || data[0] === undefined || data[0] === null) {
+            return res.json({ "error": "No user found" })
+        }
+        else if (data) {
+            var amount = 0
+            if (data[0].cart === []) {
+                return res.send("no product found")
+            }
+            let orders = data[0].cart
+            for (let i = 0; i < orders.length; i++) {
+                await Products.find({ _id: orders[i] }, async function (err, value) {
+                    if (err || !value || value === [] || value[0] === null || value[0] === undefined) {
+                        if (i === orders.length - 1) {
+                            return res.json({ "amount": amount })
+                        }
+                    }
+                    else if (value) {
+                        amount = amount + value[0].price
+                        if (i === orders.length - 1) {
+                            return res.json({ "amount": amount })
+                        }
+                    }
+                })
+            }
+        }
     })
 }
