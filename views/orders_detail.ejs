@@ -1,0 +1,54 @@
+<%- include('header.ejs') %>
+
+<div class="ui container text-center">
+
+    <div style="margin-bottom:4vh">
+        <h1>Order ID: <%- order[0].transaction_id %></h1>
+    </div>
+
+    <br/><br/>
+
+    <div class="card">
+        <div class="card-header">
+            Address: <%- order[0].address %>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Total Amount: <%- order[0].amount %>
+            </h5>
+            </h5>
+
+            <p class="card-text">
+                Status:<select name="category" id="category">
+                    <option value="<%- status %>"> <%- status %></option>
+                    <% for(var i=0;i<en.length;i++) { %>
+                    <% if(status!= en[i]) { %>
+                    <option value="<%- en[i] %>"><%- en[i] %></option>
+                    <% } %>
+                    <% } %>
+                </select>
+            </p>
+        </div>
+    </div>
+            
+    <br/><br/>
+
+    <div class="row text-center">
+        <% for(var i=0;i<order[0].products.length;i++) { %>
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-header">
+                        <img class="card-img-top" src="/api/product/photo/<%- list[i]._id %>" style="height:100px; width:150px" alt="Card image cap">
+                    </div>
+                    <div class="card-body">
+                        
+                      <h5 class="card-title"><%- list[i].name %></h5>
+                      <p class="card-text">Price: ₹<%- list[i].price %></p>
+                    </div>
+                  </div>
+
+            </div>
+            <br/>
+        <% } %>
+
+</div>
