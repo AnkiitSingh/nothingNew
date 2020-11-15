@@ -3,17 +3,17 @@ const User = require("../models/userSchema");
 const Products = require("../models/productSchema")
 
 exports.getOrders = async (req, res) => {
-    const orders = await Order.find({status: 'Recieved'});
+    const orders = await Order.find({ status: 'Recieved' });
     res.render("orders", { orders: orders });
-  };
+};
 
-  exports.getOrder = async (req, res) => {
-    const order = await Order.find({_id: req.params.id});
+exports.getOrder = async (req, res) => {
+    const order = await Order.find({ _id: req.params.id });
     res.send(order);
-  };
+};
 
 exports.searchOrder = async (req, res) => {
-    const order = await Order.find({transaction_id: req.body.id, status: 'Recieved'});
+    const order = await Order.find({ transaction_id: req.body.id, status: 'Recieved' });
     res.render("orders", { orders: order });
 };
 
@@ -73,5 +73,35 @@ exports.orderDetails = async (req, res) => {
             res.send("No Orders Found")
         }
         res.send(value[0].products)
+    })
+}
+
+exports.orderAmount = async (req, res) => {
+    User.find({ _id: req.params.userId }, async function (err, data) {
+        if (err || !data || data === [] || data[0] === undefined || data[0] === null) {
+            return res.json({ "error": "No user found" })
+        }
+        else if (data) {
+            var amount = 0
+            if (data[0].cart === []) {
+                return res.send("no product found")
+            }
+            let orders = data[0].cart
+            for (let i = 0; i < orders.length; i++) {
+                await Products.find({ _id: orders[i] }, async function (err, value) {
+                    if (err || !value || value === [] || value[0] === null || value[0] === undefined) {
+                        if (i === orders.length - 1) {
+                            return res.json({ "amount": amount })
+                        }
+                    }
+                    else if (value) {
+                        amount = amount + value[0].price
+                        if (i === orders.length - 1) {
+                            return res.json({ "amount": amount })
+                        }
+                    }
+                })
+            }
+        }
     })
 }
