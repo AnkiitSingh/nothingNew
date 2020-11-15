@@ -166,7 +166,7 @@ exports.deleteProduct = async (req, res) => {
 };
 
 exports.filterProducts = async (req, res) => {
-  const products = await Product.find({ category: req.params.categoryName });
+  const products = await Product.find({ category: req.params.categoryId, status: "InStock" });
   if (products[0] == null) {
     return res.send("No product found");
   }

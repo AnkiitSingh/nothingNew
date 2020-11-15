@@ -3,7 +3,7 @@ const router = express.Router();
 const {searchOrder, getOrder, getOrders, placeOrder, getUserOrder, cancleOrder, orderDetails} = require("../controller/orderControler");
 
 router.get("/get/orders", getOrders);
-router.get("/get/orders/:id", getOrder);
+router.get("/orders-:id", getOrder);
 router.get("/user/order/:userId", getUserOrder);
 router.get("/user/orderDetails/:orderId", orderDetails);
 router.post("/order/search", searchOrder);
