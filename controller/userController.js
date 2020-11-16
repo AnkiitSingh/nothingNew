@@ -8,7 +8,6 @@ exports.formUser = async (req, res) => {
 };
 
 exports.createUser = (req, res) => {
-  console.log(req.body);
   const user = new User(req.body);
   user.save((err, user) => {
     if (err) {
@@ -16,7 +15,9 @@ exports.createUser = (req, res) => {
         error: "include all fields or email already in use"
       });
     }
-    res.redirect('/api/userForm');
+    else if (user) {
+      return res.json({ message: "Signup successfull" })
+    }
   })
 }
 
