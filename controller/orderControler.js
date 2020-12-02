@@ -7,7 +7,12 @@ exports.getOrders = async (req, res) => {
     res.render("orders", { orders: orders });
 };
 
-  exports.getOrder = async (req, res) => {
+exports.getOrder = async (req, res) => {
+    const order = await Order.find({ _id: req.params.id });
+    res.send(order);
+};
+
+  exports.getOrderDatabase = async (req, res) => {
     const order = await Order.find({_id: req.params.id});
     var list=[];
     for(var i=0;i<order[0].products.length;i++){
@@ -80,6 +85,22 @@ exports.orderDetails = async (req, res) => {
             res.send("No Orders Found")
         }
         res.send(value[0].products)
+    })
+}
+
+exports.returnOrder = async (req, res) => {
+    const user = await User.find({ _id: req.params.userId }, async function (err, person) {
+        if (err) {
+            res.send("No user Found")
+        }
+        Order.find({ _id: req.params.orderId }, async function (err, value) {
+            if (err) {
+                res.send("Order Not Found");
+            }
+            value[0].status = "Returning";
+            await value[0].save()
+            res.send(value)
+        })
     })
 }
 
