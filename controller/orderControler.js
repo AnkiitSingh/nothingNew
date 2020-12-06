@@ -3,7 +3,7 @@ const User = require("../models/userSchema");
 const Product = require("../models/productSchema")
 
 exports.getOrders = async (req, res) => {
-    const orders = await Order.find({ status: 'Recieved' });
+    const orders = await Order.find();
     res.render("orders", { orders: orders });
 };
 
@@ -21,7 +21,12 @@ exports.getOrder = async (req, res) => {
     }
     console.log(order);
     const en= Order.schema.path('status').enumValues;
-    res.render("orders_detail", { order: order, status: order[0].status, list: list,en: en});
+    res.render("orders_detail", { order: order, status: order[0].status, list: list,en: en, id: req.params.id });
+  };
+
+  exports.changeOrderStatus = async (req, res) => {
+    const order = await Order.findByIdAndUpdate(req.params.id,{status: req.body.status}, { new: true });
+    res.redirect('/api/get_orders');
   };
 
 exports.searchOrder = async (req, res) => {

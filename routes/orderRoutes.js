@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { returnOrder, searchOrder, getOrderDatabase, getOrder, getOrders, placeOrder, getUserOrder, cancleOrder, orderDetails, orderAmount } = require("../controller/orderControler");
+const { returnOrder,changeOrderStatus, searchOrder, getOrderDatabase, getOrder, getOrders, placeOrder, getUserOrder, cancleOrder, orderDetails, orderAmount } = require("../controller/orderControler");
 
-router.get("/get/orders", getOrders);
+router.get("/get_orders", getOrders);
 router.get("/orders/:id", getOrder);
 router.get("/orders-:id", getOrderDatabase);
+router.post("/changeOrderStatus-:id", changeOrderStatus);
 router.get("/user/order/:userId", getUserOrder);
 router.get("/user/orderDetails/:orderId", orderDetails);
 router.get("/user/:userId/amount", orderAmount)

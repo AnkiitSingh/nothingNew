@@ -19,14 +19,18 @@
             </h5>
 
             <p class="card-text">
-                Status:<select name="category" id="category">
-                    <option value="<%- status %>"> <%- status %></option>
-                    <% for(var i=0;i<en.length;i++) { %>
-                    <% if(status!= en[i]) { %>
-                    <option value="<%- en[i] %>"><%- en[i] %></option>
-                    <% } %>
-                    <% } %>
-                </select>
+                <form method="post" action="/api/changeOrderStatus-<%- id %>">
+                    Status:<select name="status" id="category">
+                        <option value="<%- status %>"> <%- status %></option>
+                        <% for(var i=0;i<en.length;i++) { %>
+                            <% if(status!= en[i]) { %>
+                                <option value="<%- en[i] %>"><%- en[i] %></option>
+                            <% } %>
+                        <% } %>
+                    </select>
+                    <br><br>
+                    <button type="submit" class="btn btn-primary">Saved</button>
+                </form>
             </p>
         </div>
     </div>
