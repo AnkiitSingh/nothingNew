@@ -93,6 +93,22 @@ exports.cancleOrder = async (req, res) => {
     })
 }
 
+exports.returnOrder = async (req, res) => {
+    const user = await User.find({ _id: req.params.userId }, async function (err, person) {
+        if (err) {
+            res.send("No user Found")
+        }
+        Order.find({ _id: req.params.orderId }, async function (err, value) {
+            if (err) {
+                res.send("Order Not Found");
+            }
+            value[0].status = "Returning";
+            await value[0].save()
+            res.send(value)
+        })
+    })
+}
+
 exports.orderDetails = async (req, res) => {
     Order.find({ _id: req.params.orderId }, async function (err, value) {
         if (err) {
@@ -129,7 +145,8 @@ exports.orderAmount = async (req, res) => {
         else if (data) {
             var amount = 0
             if (data[0].cart === []) {
-                return res.send("no product found")
+                console.log(data[0].cart)
+                return res.json({ "amount": 0 })
             }
             let orders = data[0].cart
             for (let i = 0; i < orders.length; i++) {
