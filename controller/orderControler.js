@@ -1,10 +1,15 @@
 const Order = require("../models/orderSchema");
 const User = require("../models/userSchema");
-const Products = require("../models/productSchema")
+const Product = require("../models/productSchema")
 
 exports.getOrders = async (req, res) => {
-    const orders = await Order.find({ status: 'Recieved' });
+    const orders = await Order.find();
     res.render("orders", { orders: orders });
+};
+
+exports.getReturnOrders = async (req, res) => {
+    const orders = await Order.find({status: 'Request Return'});
+    res.render("orders_returning", { orders: orders });
 };
 
 exports.getOrder = async (req, res) => {
@@ -12,10 +17,34 @@ exports.getOrder = async (req, res) => {
     res.send(order);
 };
 
+  exports.getOrderDatabase = async (req, res) => {
+    const order = await Order.find({_id: req.params.id});
+    var list=[];
+    for(var i=0;i<order[0].products.length;i++){
+        const product= await Product.findById(order[0].products[i])
+        list.push(product);
+    }
+    console.log(order);
+    const en= Order.schema.path('status').enumValues;
+    res.render("orders_detail", { order: order, status: order[0].status, list: list,en: en, id: req.params.id });
+  };
+
+  exports.changeOrderStatus = async (req, res) => {
+    await Order.findByIdAndUpdate(req.params.id,{status: req.body.status}, { new: true });
+    res.redirect('/api/get_orders');
+  };
+
 exports.searchOrder = async (req, res) => {
-    const order = await Order.find({ transaction_id: req.body.id, status: 'Recieved' });
+    const order = await Order.find({ transaction_id: req.body.id});
     res.render("orders", { orders: order });
 };
+
+exports.searchReturnOrder = async (req, res) => {
+    const order = await Order.find({ transaction_id: req.body.id, status: 'Return Order' });
+    res.render("orders_returning", { orders: order });
+};
+
+
 
 exports.placeOrder = async (req, res) => {
     const user = await User.find({ _id: req.params.userId }, async function (err, person) {
@@ -89,6 +118,22 @@ exports.orderDetails = async (req, res) => {
             res.send("No Orders Found")
         }
         res.send(value[0].products)
+    })
+}
+
+exports.returnOrder = async (req, res) => {
+    const user = await User.find({ _id: req.params.userId }, async function (err, person) {
+        if (err) {
+            res.send("No user Found")
+        }
+        Order.find({ _id: req.params.orderId }, async function (err, value) {
+            if (err) {
+                res.send("Order Not Found");
+            }
+            value[0].status = "Returning";
+            await value[0].save()
+            res.send(value)
+        })
     })
 }
 

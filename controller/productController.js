@@ -63,7 +63,7 @@ exports.createProduct = (req, res) => {
           error: "Saving product in DB failed",
         });
       }
-      res.redirect("/api/product");
+      res.redirect("/");
     });
   });
 };
@@ -115,7 +115,7 @@ exports.updateProduct = (req, res) => {
         });
       }
       console.log("save");
-      res.redirect("/api/product");
+      res.redirect("/");
     });
   });
 };
@@ -153,7 +153,7 @@ exports.formProductEdit = async (req, res) => {
     name,
     description,
     price,
-    photo,
+    photo: `/api/product/photo/${product._id}`,
     quantity,
   });
 };
@@ -162,16 +162,16 @@ exports.deleteProduct = async (req, res) => {
   const product = await Product.findByIdAndRemove(req.params.id);
   if (!product) return res.status(404).send("Given ID was not found"); //404 is error not found
 
-  res.redirect("/api/product");
+  res.redirect("/");
 };
 
 exports.filterProducts = async (req, res) => {
-  const products = await Product.find({ category: req.params.categoryName });
+  const products = await Product.find({ category: req.params.categoryId});
   if (products[0] == null) {
     return res.send("No product found");
   }
-  res.send(products);
-}
+  res.render("products", { products: products });
+};
 
 exports.cartProduct = async (req, res) => {
   const products = await Product.find({ _id: req.params.id });

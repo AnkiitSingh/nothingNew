@@ -6,18 +6,29 @@
         <h1>Products</h1>
     </div>
 
-    <div class="row">
+    <br/><br/>
+
+    <div class="row text-center">
         <% for(var i=0;i<products.length;i++) { %>
-            <div class="col-sm-4"  style="padding-bottom:4vh">
-                <h4><%- products[i].name %></h4>
-                <a href="/api/productEdit-<%- products[i]._id %>">
-                    <button type="button" class="btn-primary">Edit</button>
-                </a>
-                <a data-toggle="modal" data-target="#exampleModal<%- i %>">
-                    <button type="button" class="btn-primary">Delete</button>
-                </a>
-                <%- include('deleteModal.ejs',{link: `/api/product/admin/delete/${products[i]._id}`, Sno: i }) %>
+            <div class="col-sm-4">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="/api/product/photo/<%- products[i]._id %>" style="height:25vh; width:20vw" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title"><%- products[i].name %></h5>
+                        <p class="card-text"><%- products[i].description %></p>
+                        <p class="card-text">Price: ₹<%- products[i].price %></p>
+                        <p class="card-text">Quantity: <%- products[i].quantity %></p>
+                        <p class="card-text">Status: <%- products[i].status %></p>
+                    </div>
+        
+                    <div class="card-body">
+                        <a href="/api/productEdit-<%- products[i]._id %>" class="card-link">Edit</a>
+                        <a href="#" data-toggle="modal" data-target="#exampleModal<%- i %>" class="card-link">Delete</a>
+                    </div>
+                </div>
             </div>
+            <%- include('deleteModal.ejs',{link: `/api/product/admin/delete/${products[i]._id}`, Sno: i }) %>
+            <br/>
         <% } %>
-    </div>
+
 </div>
