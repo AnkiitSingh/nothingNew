@@ -3,10 +3,10 @@
 <div class="ui container text-center">
 
     <div style="margin-bottom:4vh">
-        <h2 style="color:rgb(24, 112, 228); font-family: 'Josefin Sans', sans-serif;">Orders</h2>
+        <h2 style="color:rgb(24, 112, 228); font-family: 'Josefin Sans', sans-serif;">Orders Returning</h2>
     </div>
 
-    <form class="ui form" action="/api/order_search" method="post"  enctype="application/json">
+    <form class="ui form" action="/api/order_return_search" method="post"  enctype="application/json">
         <label>Order Id</label>
         <input type="text" id="id" name="id" placeholder="Id" />
         <br/><br/>
@@ -26,17 +26,16 @@
 
         <tbody>
             <% for(var i=0;i<orders.length;i++) { %>
-                <% if(orders[i].status!="Request Return") {%>
+                
                     <tr>
-                        <th scope="row"><%- i+1 %></th>
-                        <td>
-                            <a href="/api/orders-<%- orders[i]._id %>" >
-                                <h5 style="color:white;outline:none"><%- orders[i].transaction_id %></h5>
-                            </a>
-                        </td>
-                        <td><%- orders[i].status %></td>
+                            <th scope="row"><%- i+1 %></th>
+                            <td>
+                                <a href="/api/orders-<%- orders[i]._id %>" >
+                                    <h5 style="color:white;outline:none"><%- orders[i].transaction_id %></h5>
+                                </a>
+                            </td>
+                            <td><%- orders[i].status %></td>
                     </tr>
-                <%}%>
             <% } %>
         </tbody>
       </table>

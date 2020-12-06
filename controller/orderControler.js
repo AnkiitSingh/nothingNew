@@ -7,6 +7,11 @@ exports.getOrders = async (req, res) => {
     res.render("orders", { orders: orders });
 };
 
+exports.getReturnOrders = async (req, res) => {
+    const orders = await Order.find({status: 'Request Return'});
+    res.render("orders_returning", { orders: orders });
+};
+
 exports.getOrder = async (req, res) => {
     const order = await Order.find({ _id: req.params.id });
     res.send(order);
@@ -25,14 +30,21 @@ exports.getOrder = async (req, res) => {
   };
 
   exports.changeOrderStatus = async (req, res) => {
-    const order = await Order.findByIdAndUpdate(req.params.id,{status: req.body.status}, { new: true });
+    await Order.findByIdAndUpdate(req.params.id,{status: req.body.status}, { new: true });
     res.redirect('/api/get_orders');
   };
 
 exports.searchOrder = async (req, res) => {
-    const order = await Order.find({ transaction_id: req.body.id, status: 'Recieved' });
+    const order = await Order.find({ transaction_id: req.body.id});
     res.render("orders", { orders: order });
 };
+
+exports.searchReturnOrder = async (req, res) => {
+    const order = await Order.find({ transaction_id: req.body.id, status: 'Return Order' });
+    res.render("orders_returning", { orders: order });
+};
+
+
 
 exports.placeOrder = async (req, res) => {
     const user = await User.find({ _id: req.params.userId }, async function (err, person) {

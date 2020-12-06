@@ -15,7 +15,8 @@
           </div>
           <div class="sidebar-heading">More </div>
           <div class="list-group list-group-flush">
-            <a href="/api/get/orders" class="list-group-item list-group-item-action bg-light">Orders</a>
+            <a href="/api/get_orders" class="list-group-item list-group-item-action bg-light">Orders</a>
+            <a href="/api/get_returnOrders" class="list-group-item list-group-item-action bg-light">Request Orders</a>
           </div>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -47,7 +48,7 @@
                 <div class="col-sm-4">
                     <div class="card" style="width: 18rem;">
                         <a href="/api/product-<%- categories[i]._id %>">
-                            <img class="card-img-top" src="/api/category/photo/<%- categories[i]._id %>" style="height:25vh; width:20vw" alt="Card image cap">
+                            <img class="card-img-top" src="/api/category/photo/<%- categories[i]._id %>" style="height:25vh; width:16vw" alt="Card image cap">
                         </a>
                         <div class="card-body">
                             <h5 class="card-title"><%- categories[i].name %></h5>
@@ -61,7 +62,7 @@
                     </div>
                 </div>
                 <%- include('deleteModal.ejs',{link: `/api/category/admin/delete/${categories[i]._id}`, Sno: i }) %>
-                <br/>
+                <br/><br/>
             <% } %>
         </div>
     </div>
