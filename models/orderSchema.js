@@ -14,11 +14,10 @@ const OrderSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      default: "Processing",
+      default: "Received",
+      enum: ["Cancelled", "Delivered", "Shipped", "Processing", "Received", "Returning", "Refunded", "Request Return"]
 
-      enum: ["Cancelled", "Delivered", "Shipped", "Processing", "Recieved", "Returning", "Refunded","Request Return"]
-=======
-    
+
     },
     user: {
       type: String,

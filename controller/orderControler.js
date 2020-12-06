@@ -8,7 +8,7 @@ exports.getOrders = async (req, res) => {
 };
 
 exports.getReturnOrders = async (req, res) => {
-    const orders = await Order.find({status: 'Request Return'});
+    const orders = await Order.find({ status: 'Request Return' });
     res.render("orders_returning", { orders: orders });
 };
 
@@ -17,25 +17,25 @@ exports.getOrder = async (req, res) => {
     res.send(order);
 };
 
-  exports.getOrderDatabase = async (req, res) => {
-    const order = await Order.find({_id: req.params.id});
-    var list=[];
-    for(var i=0;i<order[0].products.length;i++){
-        const product= await Product.findById(order[0].products[i])
+exports.getOrderDatabase = async (req, res) => {
+    const order = await Order.find({ _id: req.params.id });
+    var list = [];
+    for (var i = 0; i < order[0].products.length; i++) {
+        const product = await Product.findById(order[0].products[i])
         list.push(product);
     }
     console.log(order);
-    const en= Order.schema.path('status').enumValues;
-    res.render("orders_detail", { order: order, status: order[0].status, list: list,en: en, id: req.params.id });
-  };
+    const en = Order.schema.path('status').enumValues;
+    res.render("orders_detail", { order: order, status: order[0].status, list: list, en: en, id: req.params.id });
+};
 
-  exports.changeOrderStatus = async (req, res) => {
-    await Order.findByIdAndUpdate(req.params.id,{status: req.body.status}, { new: true });
+exports.changeOrderStatus = async (req, res) => {
+    await Order.findByIdAndUpdate(req.params.id, { status: req.body.status }, { new: true });
     res.redirect('/api/get_orders');
-  };
+};
 
 exports.searchOrder = async (req, res) => {
-    const order = await Order.find({ transaction_id: req.body.id});
+    const order = await Order.find({ transaction_id: req.body.id });
     res.render("orders", { orders: order });
 };
 
@@ -150,7 +150,7 @@ exports.orderAmount = async (req, res) => {
             }
             let orders = data[0].cart
             for (let i = 0; i < orders.length; i++) {
-                await Products.find({ _id: orders[i] }, async function (err, value) {
+                await Product.find({ _id: orders[i] }, async function (err, value) {
                     if (err || !value || value === [] || value[0] === null || value[0] === undefined) {
                         if (i === orders.length - 1) {
                             return res.json({ "amount": amount })

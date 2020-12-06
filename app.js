@@ -8,7 +8,7 @@ const mongoose = require("mongoose"),
   cors = require("cors"),
   Category = require("./models/categorySchema"),
   Product = require("./models/productSchema");
-  User = require("./models/userSchema");
+User = require("./models/userSchema");
 //view endine Set
 app.set("view engine", "ejs");
 
@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //Routes imported from router folder
 const productRoutes = require("./routes/productRoutes");
@@ -50,7 +50,7 @@ app.use("/api", orderRoutes);
 app.get("/", async (req, res) => {
   const categories = await Category.find();
   const products = await Product.find();
-  res.render("index.ejs", { categories, products });
+  res.render("index.ejs", { categories });
 });
 
 //PORT
