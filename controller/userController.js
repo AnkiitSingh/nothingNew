@@ -133,11 +133,8 @@ exports.removeFromCart = async (req, res) => {
     if (err) {
       res.send("No user Found")
     }
-    if (req.params.no >= person[0].cart.lenght) {
-      res.send(("Invalid Delete request"));
-    }
-    else {
-      person[0].cart.splice(req.params.no, 1);
+    else if (person) {
+      person[0].cart.splice(person[0].cart.indexOf(req.params.no), 1);
     }
     await person[0].save();
     res.send(person)
