@@ -1,4 +1,5 @@
 const Category = require("../models/categorySchema");
+const Offer = require("../models/offerSchema");
 const formidable = require("formidable");
 const fs = require("fs");
 
@@ -89,7 +90,6 @@ exports.updateCategory = (req, res) => {
 
     const { name, photo } = fields;
 
-    console.log("file=" + photo);
 
     if (!name) {
       return res.status(400).json({
@@ -103,7 +103,6 @@ exports.updateCategory = (req, res) => {
 
     if (!category) return res.status(404).send("Given ID was not found"); //404 is error not found
 
-    console.log(file);
     //handle file here
     if (file.photo) {
       if (file.photo.size > 3000000) {
@@ -123,7 +122,6 @@ exports.updateCategory = (req, res) => {
           error: "Saving product in DB failed",
         });
       }
-      console.log("save");
       res.redirect("/");
     });
   });
@@ -164,6 +162,57 @@ exports.categoryProducts = async (req, res) => {
   if (category[0].photo.data) {
     res.set("Content-Type", category[0].photo.contentType);
     return res.send(category[0].photo.data);
+  }
+  res.send("not found")
+}
+
+exports.saveOffer = async (req, res) => {
+  let form = new formidable.IncomingForm();
+  form.keepExtensions = true;
+
+  form.parse(req, async (err, fields, file) => {
+    if (err) {
+      return res.status(400).json({
+        error: "problem with image",
+      });
+    }
+    const { photo } = fields;
+    if (!fields) {
+      return res.json({ error: "No image found" })
+    }
+
+    let offer = new Offer(fields);
+
+    //handle file here
+    if (file.photo) {
+      if (file.photo.size > 300000) {
+        return res.status(400).json({
+          error: "File size too big!",
+        });
+      }
+      offer.photo.data = fs.readFileSync(file.photo.path);
+      offer.photo.contentType = file.photo.type;
+    }
+
+    //save to the DB
+    offer.save((err, data) => {
+      if (err) {
+        res.status(400).json({
+          error: "Saving product in DB failed",
+        });
+      }
+      else if (data) {
+        res.json({ message: "Data successfully saved" })
+      }
+    });
+  })
+}
+
+exports.showOffer = async (req, res) => {
+  const offer = await Offer.find({})
+  if (offer[0].photo.data) {
+    res.set("Content-Type", offer[0].photo.contentType);
+    return res.send(offer[0].photo.data);
   }
   res.send("not found")
 }
