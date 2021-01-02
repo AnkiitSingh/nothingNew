@@ -69,7 +69,6 @@ exports.isAuthenticated = (req, res, next) => {
   next();
 };
 
-
 exports.pushCart = async (req, res) => {
   const user = await User.find({ _id: req.params.userid })
   var cartProduct = await req.params.productid;
@@ -85,8 +84,38 @@ exports.pushCart = async (req, res) => {
 
 exports.userCart = async (req, res) => {
   const user = await User.find({ _id: req.params.userid })
-  const cart = user[0].cart
-  res.send(cart);
+  const cart = await user[0].cart
+  let cartData = []
+  if (cart) {
+    function callback() {
+      return new Promise((resolve, reject) => {
+        for (let i = 0; i < cart.length; i++) {
+          var data = { id: cart[i], Quantity: 1 }
+          cartData.push(data)
+        }
+        resolve();
+      });
+    }
+    function compare() {
+      for (let i = 0; i < cartData.length; i++) {
+        for (let j = i + 1; j < cartData.length; j++) {
+          if (cartData[i].id === cartData[j].id) {
+            cartData[i].Quantity = cartData[i].Quantity + 1
+            cartData.splice(j, 1)
+            j = j - 1
+          }
+        }
+      }
+    }
+    callback()
+      .then(response => {
+        compare()
+        return res.send(cartData)
+      })
+      .catch(error => {
+        res.json({ error: "Something went wrong" })
+      });
+  }
 }
 
 exports.getUser = async (req, res) => {
@@ -98,6 +127,7 @@ exports.getUser = async (req, res) => {
     await res.send(info)
   })
 }
+
 exports.removeFromCart = async (req, res) => {
   const user = await User.find({ _id: req.params.userId }, async function (err, person) {
     if (err) {

@@ -182,7 +182,7 @@ exports.getCategoryProducts = async (req, res) => {
 }
 
 exports.cartProduct = async (req, res) => {
-  const products = await Product.find({ _id: req.params.id });
+  var products = await Product.find({ _id: req.params.id });
   if (products[0] == null) {
     return res.send("No product found");
   }
