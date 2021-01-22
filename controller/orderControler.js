@@ -24,7 +24,6 @@ exports.getOrderDatabase = async (req, res) => {
         const product = await Product.findById(order[0].products[i])
         list.push(product);
     }
-    console.log(order);
     const en = Order.schema.path('status').enumValues;
     res.render("orders_detail", { order: order, status: order[0].status, list: list, en: en, id: req.params.id });
 };
@@ -44,15 +43,15 @@ exports.searchReturnOrder = async (req, res) => {
     res.render("orders_returning", { orders: order });
 };
 
-
-
 exports.placeOrder = async (req, res) => {
     const user = await User.find({ _id: req.params.userId }, async function (err, person) {
         if (err) {
             res.send("No user Found")
         }
         Order.user = req.params.userId;
-        const order = new Order(req.body);
+        let data = req.body
+        data.products=person[0].cart
+        const order = new Order(data);
         order.save(async (err, order) => {
             if (err) {
                 console.log(err);
@@ -64,7 +63,7 @@ exports.placeOrder = async (req, res) => {
             person[0].cart = [];
             await person[0].save();
             res.send(order);
-        })
+        }) 
     })
 };
 
@@ -145,7 +144,6 @@ exports.orderAmount = async (req, res) => {
         else if (data) {
             var amount = 0
             if (data[0].cart === []) {
-                console.log(data[0].cart)
                 return res.json({ "amount": 0 })
             }
             let orders = data[0].cart

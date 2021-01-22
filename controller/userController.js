@@ -82,11 +82,11 @@ exports.pushCart = async (req, res) => {
   return res.send(user);
 }
 
-exports.userCart = async (req, res) => {
+exports.userCart = async (req, res) => { //Error handle properly
   const user = await User.find({ _id: req.params.userid })
-  const cart = await user[0].cart
   let cartData = []
-  if (cart) {
+  if (user && user[0]!== undefined) {
+    const cart = user[0].cart
     function callback() {
       return new Promise((resolve, reject) => {
         for (let i = 0; i < cart.length; i++) {
@@ -120,7 +120,7 @@ exports.userCart = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   const user = await User.find({ _id: req.params.userId }, async function (err, person) {
-    if (err) {
+    if (err || person[0]=== undefined) {
       res.send("No user Found")
     }
     const info = { "email": person[0].email, "phoneNo": person[0].phoneNo, "address": person[0].address };
