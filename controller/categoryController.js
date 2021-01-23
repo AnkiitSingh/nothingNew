@@ -97,7 +97,7 @@ exports.updateCategory = (req, res) => {
       });
     }
 
-    let category = await Category.findByIdAndUpdate(req.params.id, fields, {
+    let category = await Category.findByIdAndUpdate(req.params.id, {name}, {
       new: true,
     });
 
@@ -105,7 +105,7 @@ exports.updateCategory = (req, res) => {
 
     console.log(file);
     //handle file here
-    if (file.photo) {
+    if (file.photo.size!=0) {
       if (file.photo.size > 3000000) {
         return res.status(400).json({
           error: "File size too big!",

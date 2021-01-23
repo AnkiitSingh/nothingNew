@@ -88,14 +88,14 @@ exports.updateProduct = (req, res) => {
       });
     }
 
-    let product = await Product.findByIdAndUpdate(req.params.id, fields, {
+    let product = await Product.findByIdAndUpdate(req.params.id, {name, description, category, price, quantity}, {
       new: true,
     });
 
     if (!product) return res.status(404).send("Given ID was not found"); //404 is error not found
 
     //handle file here
-    if (file.photo) {
+    if (file.photo.size!=0) {
       if (file.photo.size > 3000000) {
         return res.status(400).json({
           error: "File size too big!",
