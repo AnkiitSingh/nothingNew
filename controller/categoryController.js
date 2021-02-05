@@ -97,14 +97,15 @@ exports.updateCategory = (req, res) => {
       });
     }
 
-    let category = await Category.findByIdAndUpdate(req.params.id, fields, {
+    let category = await Category.findByIdAndUpdate(req.params.id, {name}, {
       new: true,
     });
 
     if (!category) return res.status(404).send("Given ID was not found"); //404 is error not found
 
+
     //handle file here
-    if (file.photo) {
+    if (file.photo.size!=0) {
       if (file.photo.size > 3000000) {
         return res.status(400).json({
           error: "File size too big!",
@@ -122,6 +123,7 @@ exports.updateCategory = (req, res) => {
           error: "Saving product in DB failed",
         });
       }
+
       res.redirect("/");
     });
   });
