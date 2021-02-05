@@ -182,6 +182,9 @@ exports.saveOffer = async (req, res) => {
     if (!fields) {
       return res.json({ error: "No image found" })
     }
+    if(!photo){
+      return res.json({ error: "No image found" })
+    }
 
     let offer = new Offer(fields);
 
