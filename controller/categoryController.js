@@ -89,7 +89,6 @@ exports.updateCategory = (req, res) => {
 
     const { name, photo } = fields;
 
-    console.log("file=" + photo);
 
     if (!name) {
       return res.status(400).json({
@@ -103,7 +102,7 @@ exports.updateCategory = (req, res) => {
 
     if (!category) return res.status(404).send("Given ID was not found"); //404 is error not found
 
-    console.log(file);
+    
     //handle file here
     if (file.photo.size!=0) {
       if (file.photo.size > 3000000) {
@@ -123,7 +122,7 @@ exports.updateCategory = (req, res) => {
           error: "Saving product in DB failed",
         });
       }
-      console.log("save");
+      
       res.redirect("/");
     });
   });

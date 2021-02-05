@@ -105,7 +105,7 @@ exports.updateProduct = (req, res) => {
       product.photo.contentType = file.photo.type;
     }
 
-    console.log("bye");
+    
 
     //save to the DB
     product.save((err, category) => {
@@ -114,7 +114,7 @@ exports.updateProduct = (req, res) => {
           error: "Saving product in DB failed",
         });
       }
-      console.log("save");
+     
       res.redirect("/");
     });
   });

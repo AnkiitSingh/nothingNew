@@ -8,7 +8,7 @@ exports.formUser = async (req, res) => {
 };
 
 exports.createUser = (req, res) => {
-  console.log(req.body);
+  
   const user = new User(req.body);
   user.save((err, user) => {
     if (err) {

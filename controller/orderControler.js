@@ -24,7 +24,7 @@ exports.getOrder = async (req, res) => {
         const product= await Product.findById(order[0].products[i])
         list.push(product);
     }
-    console.log(order);
+    
     const en= Order.schema.path('status').enumValues;
     res.render("orders_detail", { order: order, status: order[0].status, list: list,en: en, id: req.params.id });
   };
@@ -55,7 +55,6 @@ exports.placeOrder = async (req, res) => {
         const order = new Order(req.body);
         order.save(async (err, order) => {
             if (err) {
-                console.log(err);
                 return res.status(400).json({
                     err: "NOT able to save user in DB",
                 });
