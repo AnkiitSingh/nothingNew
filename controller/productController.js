@@ -166,15 +166,23 @@ exports.deleteProduct = async (req, res) => {
 };
 
 exports.filterProducts = async (req, res) => {
-  const products = await Product.find({ category: req.params.categoryId});
+  const products = await Product.find({ category: req.params.categoryId });
   if (products[0] == null) {
     return res.send("No product found");
   }
   res.render("products", { products: products });
 };
 
+exports.getCategoryProducts = async (req, res) => {
+  const products = await Product.find({ category: req.params.categoryName, });
+  if (products[0] == null) {
+    return res.send("No product found");
+  }
+  res.send(products);
+}
+
 exports.cartProduct = async (req, res) => {
-  const products = await Product.find({ _id: req.params.id });
+  var products = await Product.find({ _id: req.params.id });
   if (products[0] == null) {
     return res.send("No product found");
   }

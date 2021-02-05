@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
+
 const { getReturnOrders,searchReturnOrder,returnOrder,changeOrderStatus, searchOrder, getOrderDatabase, getOrder, getOrders, placeOrder, getUserOrder, cancleOrder, orderDetails, orderAmount } = require("../controller/orderControler");
+
+
 
 router.get("/get_orders", getOrders);
 router.get("/get_returnOrders", getReturnOrders);
@@ -15,4 +18,6 @@ router.post("/order_return_search", searchReturnOrder);
 router.post("/order/create/:userId", placeOrder);
 router.put("/order/cancel/:userId/:orderId", cancleOrder);
 router.put("/order/return/:userId/:orderId", returnOrder);
+
 module.exports = router;
+

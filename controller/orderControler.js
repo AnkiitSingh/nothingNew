@@ -8,7 +8,7 @@ exports.getOrders = async (req, res) => {
 };
 
 exports.getReturnOrders = async (req, res) => {
-    const orders = await Order.find({status: 'Request Return'});
+    const orders = await Order.find({ status: 'Request Return' });
     res.render("orders_returning", { orders: orders });
 };
 
@@ -17,25 +17,24 @@ exports.getOrder = async (req, res) => {
     res.send(order);
 };
 
-  exports.getOrderDatabase = async (req, res) => {
-    const order = await Order.find({_id: req.params.id});
-    var list=[];
-    for(var i=0;i<order[0].products.length;i++){
-        const product= await Product.findById(order[0].products[i])
+exports.getOrderDatabase = async (req, res) => {
+    const order = await Order.find({ _id: req.params.id });
+    var list = [];
+    for (var i = 0; i < order[0].products.length; i++) {
+        const product = await Product.findById(order[0].products[i])
         list.push(product);
     }
-    
-    const en= Order.schema.path('status').enumValues;
-    res.render("orders_detail", { order: order, status: order[0].status, list: list,en: en, id: req.params.id });
-  };
+    const en = Order.schema.path('status').enumValues;
+    res.render("orders_detail", { order: order, status: order[0].status, list: list, en: en, id: req.params.id });
+};
 
-  exports.changeOrderStatus = async (req, res) => {
-    await Order.findByIdAndUpdate(req.params.id,{status: req.body.status}, { new: true });
+exports.changeOrderStatus = async (req, res) => {
+    await Order.findByIdAndUpdate(req.params.id, { status: req.body.status }, { new: true });
     res.redirect('/api/get_orders');
-  };
+};
 
 exports.searchOrder = async (req, res) => {
-    const order = await Order.find({ transaction_id: req.body.id});
+    const order = await Order.find({ transaction_id: req.body.id });
     res.render("orders", { orders: order });
 };
 
@@ -44,15 +43,15 @@ exports.searchReturnOrder = async (req, res) => {
     res.render("orders_returning", { orders: order });
 };
 
-
-
 exports.placeOrder = async (req, res) => {
     const user = await User.find({ _id: req.params.userId }, async function (err, person) {
         if (err) {
             res.send("No user Found")
         }
         Order.user = req.params.userId;
-        const order = new Order(req.body);
+        let data = req.body
+        data.products=person[0].cart
+        const order = new Order(data);
         order.save(async (err, order) => {
             if (err) {
                 return res.status(400).json({
@@ -63,7 +62,7 @@ exports.placeOrder = async (req, res) => {
             person[0].cart = [];
             await person[0].save();
             res.send(order);
-        })
+        }) 
     })
 };
 
@@ -86,6 +85,22 @@ exports.cancleOrder = async (req, res) => {
                 res.send("Order Not Found");
             }
             value[0].status = "Cancelled";
+            await value[0].save()
+            res.send(value)
+        })
+    })
+}
+
+exports.returnOrder = async (req, res) => {
+    const user = await User.find({ _id: req.params.userId }, async function (err, person) {
+        if (err) {
+            res.send("No user Found")
+        }
+        Order.find({ _id: req.params.orderId }, async function (err, value) {
+            if (err) {
+                res.send("Order Not Found");
+            }
+            value[0].status = "Returning";
             await value[0].save()
             res.send(value)
         })
@@ -128,11 +143,11 @@ exports.orderAmount = async (req, res) => {
         else if (data) {
             var amount = 0
             if (data[0].cart === []) {
-                return res.send("no product found")
+                return res.json({ "amount": 0 })
             }
             let orders = data[0].cart
             for (let i = 0; i < orders.length; i++) {
-                await Products.find({ _id: orders[i] }, async function (err, value) {
+                await Product.find({ _id: orders[i] }, async function (err, value) {
                     if (err || !value || value === [] || value[0] === null || value[0] === undefined) {
                         if (i === orders.length - 1) {
                             return res.json({ "amount": amount })
